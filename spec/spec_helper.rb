@@ -6,9 +6,9 @@ ENV['ENVIRONMENT'] = 'test'
 # Configure Rspec
 RSpec.configure do |config|
 
-  # config.before(:each) do
-  #   construct_test_database 
-  # end
+  config.before(:each) do
+    construct_test_database # could delete
+  end
 
   # config.after(:each) do
   #   deconstruct_test_database # use truncate instead, reset serial id

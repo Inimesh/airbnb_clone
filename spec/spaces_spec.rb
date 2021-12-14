@@ -1,4 +1,32 @@
-# require 'bookmarks'
+require 'spaces'
+
+describe Spaces do
+
+  describe '#add_space' do
+
+    it 'adds a new space' do
+      Spaces.add_space('Cosy Cottage', 'Extremely cosy cottage in the woods', '70')
+      expect(Spaces.all.count).to eq 1
+      expect(Spaces.all[0].space_name).to eq 'Cosy Cottage'
+    end
+
+  end
+
+  describe '#all' do
+        it 'returns an array of Spaces objects' do
+          Spaces.add_space('Cosy Cottage', 'Extremely cosy cottage in the woods', '70')
+          Spaces.add_space('Cosy Villa', 'Extremely villa cottage in the woods', '50')
+          Spaces.add_space('Cosy Mansion', 'Extremely mansion cottage in the woods', '150')
+          expect(Spaces.all.count).to eq 3
+          expect(Spaces.all[0]).to be_an_instance_of Spaces
+          expect(Spaces.all[1].id).to eq '2'
+          expect(Spaces.all[2].space_name).to eq 'Cosy Mansion'
+          expect(Spaces.all[0].space_description).to eq 'Extremely cosy cottage in the woods'
+          expect(Spaces.all[1].price_per_night).to eq '50'
+        end
+      end
+
+end
 
 # describe Bookmarks do
 # let(:bookmarks) { described_class.all }   
@@ -62,3 +90,4 @@
 #   end
 
 # end
+
