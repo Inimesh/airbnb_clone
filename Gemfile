@@ -6,6 +6,7 @@ gem 'sinatra'
 gem 'sinatra-contrib'
 gem 'sinatra-flash'
 gem 'pg'
+gem 'webrick'
 # add b-crypt password encrypter
 
 group :test do
