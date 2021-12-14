@@ -23,12 +23,20 @@ class MakersBnb < Sinatra::Base
 
   post '/sign-up' do
     session['sign_up_data'] = params
-    flash[:welcome] = "Welcome #{params['name']}"
-    redirect '/'
-    # TODO create model to check if username and email are unique
-    # TODO test to make sure the two passwords match
+    if SignUp.password_valid?(params['password'], params['password_confirm'])
+      if SignUp.validate(params['username'], params['email'])
+        # User.add_user(params)
+        flash[:welcome] = "Welcome #{params['name']}"
+        redirect '/'
+      else
+        flash[:details_in_use] = "Username or email already registered"
+      end
+    else
+      flash[:password_error] = "Wrong password"
+      redirect '/sign-up'
+    end
+    # TODO create model to check if username and email are unique (commented out in sign_up.rb - requires database)
     # TODO have session['logged_in_user'] = User.instance
-    # TODO Rubygem encrypt password when entered and then save in database as encrypted
   end
   
 
