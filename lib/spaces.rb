@@ -1,24 +1,28 @@
-# require 'pg'
-# require_relative 'database_connection'
+require 'pg'
+require_relative 'database_connection'
 
-# class Bookmarks
-#   attr_reader :id, :url, :title, :comments
+class Spaces
+  attr_reader :id, :space_name, :space_description, :price_per_night
 
-#   def initialize(id, url, title)
-#     @id = id
-#     @url = url
-#     @title = title
-#   end
+  def initialize(id, space_name, space_description, price_per_night)
+    @id = id
+    @space_name = space_name
+    @space_description = space_description
+    @price_per_night = price_per_night
+  end
+
+  def self.add_space(space_name, space_description, price_per_night)
+    DatabaseConnection.query("INSERT INTO spaces (space_name, space_description, price_per_night) VALUES ($1, $2, $3)", [space_name, space_description, price_per_night])
+  end
+
+end
   
-#   def self.all
-#     table = DatabaseConnection.query('TABLE bookmarks ORDER BY id ASC') 
-#     table.map { |bookmark| Bookmarks.new(bookmark['id'], bookmark['url'], bookmark['title']) }
-#   end
+  def self.all
+    table = DatabaseConnection.query('SELCT * FROM spaces ORDER BY id ASC') 
+    table.map { |space| Spaces.new(space['id'], space['space_name'], space['space_description'], space['price_per_night']) }
+  end
 
-#   def self.add(url, title)
-#     return false unless self.is_url?(url)
-#     DatabaseConnection.query("INSERT INTO bookmarks (url, title) VALUES ($1, $2)", [url, title])
-#   end
+
 
 #   def self.delete(id)
 #     DatabaseConnection.query("DELETE FROM bookmarks WHERE id = ($1)", [id])

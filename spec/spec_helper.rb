@@ -7,7 +7,7 @@ require_relative './deconstruct_test_database'
 RSpec.configure do |config|
 
   config.before(:each) do
-    construct_test_database 
+    construct_test_database # could delete
   end
 
   config.after(:each) do
