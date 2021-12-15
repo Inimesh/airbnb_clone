@@ -22,6 +22,7 @@ class User
     User.new(user_id: rs[0]['user_id'], username: rs[0]['username'], email: rs[0]['email'], fullname: rs[0]['fullname'], pw: rs[0]['pw'])
   end
 
+  private
 
   def self.unique?(username)
     rs = DatabaseConnection.query("SELECT EXISTS(SELECT * FROM users WHERE username = $1)", [username])
