@@ -1,6 +1,13 @@
+    <ul>
     <%@spaces.each do |space|%>
+    <li class="space" id="<%= space.space_id %>">
     <%=space.space_display%>
+      <form action='/booking/<%=space.space_id %>/book' method='get'>
+        <input type="submit" value="Book">
+      </form>
+    </li>
     <%end%>
+    </ul>
 
     <div class="main-container">
       <div id="add-space-button">

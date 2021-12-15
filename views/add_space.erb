@@ -2,12 +2,12 @@
     <input type="text" name="space_name" placeholder="Your Space Name">
     <input type="textarea" name="space_description" placeholder="Space Description">
     <input type="text" name="price_per_night" placeholder="Price Description">
-    <input type="hidden" name="user_id" value="10">
+    <input type="hidden" name="user_id" value="<%= @current_user %>">
     <input type="submit" value="Add">
 
     <label for="start">Start date:</label>
     <input type="date" id="start" name="stay_start"
-    value="2018-07-22"
+    value="2021-01-01"
     min="2021-01-01" max="2022-12-31">
     <label for="end">End Date:</label>
     <input type="date" id="end" name="stay_finish"
