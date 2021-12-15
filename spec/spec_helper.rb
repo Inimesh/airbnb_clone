@@ -2,17 +2,22 @@
 ENV['ENVIRONMENT'] = 'test'
 # require_relative './construct_test_database'
 # require_relative './deconstruct_test_database'
+require_relative './setup_testing_database'
 
 # Configure Rspec
 RSpec.configure do |config|
 
-  config.before(:each) do
-    construct_test_database # could delete
-  end
+  # config.before(:each) do
+  #   construct_test_database # could delete
+  # end
 
   # config.after(:each) do
   #   deconstruct_test_database # use truncate instead, reset serial id
   # end
+
+  config.before(:each) do
+    truncate
+  end
 
   config.after(:suite) do
     puts

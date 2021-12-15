@@ -1,10 +1,10 @@
-require 'sign_up'
+require 'sign_up_validator'
 
-describe SignUp do
-  describe '.password_valid?' do
+describe SignUpValidator do
+  context '#password_valid?' 
     it 'checks that the two entered passwords match' do
       expect(described_class.password_valid?('secret', 'secret')).to eq true
       expect(described_class.password_valid?('secret', 'blah')).to eq false
     end
-  end
+  
 end
