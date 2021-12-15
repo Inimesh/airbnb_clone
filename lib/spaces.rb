@@ -2,27 +2,41 @@ require 'pg'
 require_relative 'database_connection'
 
 class Spaces
-  attr_reader :id, :space_name, :space_description, :price_per_night
+  attr_reader :id, :space_name, :space_description, :price_per_night, :user_id
 
-  def initialize(id, space_name, space_description, price_per_night)
-    @id = id
+  def initialize(space_id, space_name, space_description, price_per_night, user_id)
+    @space_id = space_id
     @space_name = space_name
     @space_description = space_description
     @price_per_night = price_per_night
+    @user_id = user_id
+
   end
 
-  def self.add_space(space_name, space_description, price_per_night)
-    DatabaseConnection.query("INSERT INTO spaces (space_name, space_description, price_per_night) VALUES ($1, $2, $3)", [space_name, space_description, price_per_night])
+  def self.add_space(space_name, space_description, price_per_night, user_id)
+    DatabaseConnection.query(
+"INSERT INTO spaces (space_name, space_description, price_per_night, user_id) VALUES ($1, $2, $3, $4)", [
+  space_name, space_description, price_per_night, user_id])
+  end
+
+  def add_availability(stay_start, stay_finish)
+    
+  end
+  
+  def self.all
+    table = DatabaseConnection.query('SELECT * FROM spaces ORDER BY space_id ASC') 
+    table.map do |space|
+      Spaces.new(space['space_id'], space['space_name'], space['space_description'], 
+     space['price_per_night'], space['user_id'])
+    end  
+  end
+
+  def space_display
+    "<h2>#{@space_name}</h2>
+    <h3>#{@space_description}</h3>"
   end
 
 end
-  
-  def self.all
-    table = DatabaseConnection.query('SELCT * FROM spaces ORDER BY id ASC') 
-    table.map { |space| Spaces.new(space['id'], space['space_name'], space['space_description'], space['price_per_night']) }
-  end
-
-
 
 #   def self.delete(id)
 #     DatabaseConnection.query("DELETE FROM bookmarks WHERE id = ($1)", [id])

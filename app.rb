@@ -4,7 +4,6 @@ require 'sinatra/flash'
 require './database_connection_setup'
 require './lib/spaces'
 
-
 class MakersBnb < Sinatra::Base
   enable :sessions
 
@@ -18,6 +17,11 @@ class MakersBnb < Sinatra::Base
     erb(:index)
   end
 
+  get '/main_view' do
+    @spaces = Spaces.all
+    erb(:main_view)
+  end
+
   get '/add_space' do
     erb(:add_space)
   end
@@ -27,7 +31,9 @@ class MakersBnb < Sinatra::Base
   end
 
   post '/new_space' do
-    Spaces.add_space(params[:space_name], params[:space_description], params[:price_per_night])
+    Spaces.add_space(params[:space_name], params[:space_description], params[:price_per_night], 
+params[:user_id])
+    Spaces.add_availability(params[:stay_start], params[:stay_finish])
     redirect '/confirm_add'
   end
 

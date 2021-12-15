@@ -1,18 +1,18 @@
 # Set up testing environment
 ENV['ENVIRONMENT'] = 'test'
 # require_relative './construct_test_database'
-# require_relative './deconstruct_test_database'
+require_relative './deconstruct_test_database'
 
 # Configure Rspec
 RSpec.configure do |config|
 
-  config.before(:each) do
-    construct_test_database # could delete
-  end
-
-  # config.after(:each) do
-  #   deconstruct_test_database # use truncate instead, reset serial id
+  # config.before(:each) do
+  #   construct_test_database # could delete
   # end
+
+  config.after(:each) do
+    deconstruct_test_database 
+  end
 
   config.after(:suite) do
     puts
@@ -41,4 +41,3 @@ require 'rspec'
 
 # tell Capybara about our app class
 Capybara.app = MakersBnb
-

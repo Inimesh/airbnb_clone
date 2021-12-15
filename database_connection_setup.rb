@@ -1,8 +1,7 @@
-# require './lib/database_connection.rb'
+require './lib/database_connection'
 
-  if ENV['ENVIRONMENT'] == 'test'
-    DatabaseConnection.setup('makersbnb_test')
-  else
-    DatabaseConnection.setup('makersbnb')
-  end
-
+if ENV['ENVIRONMENT'] == 'test'
+  DatabaseConnection.setup('makersbnb_test')
+else
+  DatabaseConnection.setup('makersbnb')
+end
