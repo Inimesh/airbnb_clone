@@ -15,7 +15,7 @@ feature 'Feature: add_space:' do
     fill_in 'space_description', with: 'Extremely cosy cottage in the woods'
     fill_in 'price_per_night', with: '70'
     click_button 'Add'
-    expect(page).to have_content 'Congratulations youve added a new space!'
+    expect(page).to have_content 'Congratulations you\'ve added a new space!'
   end
 
 end

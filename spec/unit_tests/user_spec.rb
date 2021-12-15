@@ -25,4 +25,4 @@ describe User do
     expect(user).to be_a User
     expect(user2).not_to be_a User
   end
-end 
+end

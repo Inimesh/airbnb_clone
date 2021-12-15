@@ -1,0 +1,11 @@
+    <%@spaces.each do |space|%>
+    <%=space.space_display%>
+    <%end%>
+
+    <div class="main-container">
+      <div id="add-space-button">
+        <form action="/add_space" method="get">
+          <input type="submit" value="Add Space">
+        </form>
+      </div> 
+    <div>

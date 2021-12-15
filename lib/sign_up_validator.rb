@@ -1,7 +1,6 @@
 require_relative './user'
 require 'singleton'
 
-
 class SignUpValidator
   include Singleton
 

@@ -46,4 +46,3 @@ require 'rspec'
 
 # tell Capybara about our app class
 Capybara.app = MakersBnb
-
