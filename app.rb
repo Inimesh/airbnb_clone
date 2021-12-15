@@ -44,6 +44,7 @@ class MakersBnb < Sinatra::Base
     if SignUpValidator.password_valid?(params['password'], params['password_confirm'])
       # if SignUp.validate(params['username'], params['email'])
       user = User.add_user(username: params[:username], email: params[:email], fullname: params[:fullname], pw: params[:password])
+      
       session[:user_id], session[:username] = user.user_id, user.username
       p session[:user_id], session[:username]
       
