@@ -1,5 +1,5 @@
 require 'spaces'
-require_relative './database_helper'
+require_relative './../database_helper'
 
 describe Spaces do
 

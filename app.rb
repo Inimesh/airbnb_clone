@@ -37,8 +37,8 @@ class MakersBnb < Sinatra::Base
   post '/new_space' do
     Spaces.add_space(params[:space_name], params[:space_description], params[:price_per_night], 
 params[:user_id])
-    Spaces.add_availability(params[:stay_start], params[:stay_finish])
-    redirect '/confirm_add'
+    # Spaces.add_availability(params[:stay_start], params[:stay_finish])
+    redirect '/main_view'
   end
 
   get '/sign-up' do
@@ -56,7 +56,7 @@ fullname: params[:fullname], pw: params[:password])
       p session[:user_id], session[:username]
       
       flash[:welcome] = "Welcome #{params[:username]}"
-      redirect '/'
+      redirect '/main_view'
     # else
     #     flash[:details_in_use] = "Username or email already registered"
     else

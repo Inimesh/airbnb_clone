@@ -1,7 +1,7 @@
 feature 'sign up to MakersBnB' do
   scenario 'the user can sign up for MakersBnB' do
     visit('/sign-up')
-    fill_in('name', with: 'John Smith')
+    fill_in('fullname', with: 'John Smith')
     fill_in('username', with: 'smithy')
     fill_in('email', with: 'jsmith@gmail.com')
     fill_in('password', with: 'password123')
@@ -9,6 +9,6 @@ feature 'sign up to MakersBnB' do
 
     click_on('Sign Up')
     
-    expect(page).to have_content('Welcome John')
+    expect(page).to have_content('Welcome smithy')
   end
 end
