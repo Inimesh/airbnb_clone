@@ -2,7 +2,7 @@ require 'pg'
 require_relative 'database_connection'
 
 class Spaces
-  attr_reader :id, :space_name, :space_description, :price_per_night, :user_id
+  attr_reader :space_id, :space_name, :space_description, :price_per_night, :user_id
 
   def initialize(space_id, space_name, space_description, price_per_night, user_id)
     @space_id = space_id

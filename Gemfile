@@ -8,6 +8,7 @@ gem 'sinatra-flash'
 gem 'pg'
 gem 'webrick'
 # add b-crypt password encrypter
+gem 'bcrypt'
 
 group :test do
   gem 'capybara'

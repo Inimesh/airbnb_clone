@@ -1,4 +1,5 @@
 require 'spaces'
+require_relative './database_helper'
 
 describe Spaces do
 
@@ -15,11 +16,14 @@ describe Spaces do
   describe '#all' do
     it 'returns an array of Spaces objects' do
       Spaces.add_space('Cosy Cottage', 'Extremely cosy cottage in the woods', '70')
-      Spaces.add_space('Cosy Villa', 'Extremely villa cottage in the woods', '50')
+      space = Spaces.add_space('Cosy Villa', 'Extremely villa cottage in the woods', '50')
       Spaces.add_space('Cosy Mansion', 'Extremely mansion cottage in the woods', '150')
+
+      persisted_data = persisted_data(space.space_id)
+
       expect(Spaces.all.count).to eq 3
       expect(Spaces.all[0]).to be_an_instance_of Spaces
-      expect(Spaces.all[1].id).to eq '2'
+      expect(Spaces.all[1].space_id).to eq persisted_data['space_id']
       expect(Spaces.all[2].space_name).to eq 'Cosy Mansion'
       expect(Spaces.all[0].space_description).to eq 'Extremely cosy cottage in the woods'
       expect(Spaces.all[1].price_per_night).to eq '$50.00'
