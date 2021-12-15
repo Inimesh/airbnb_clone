@@ -17,6 +17,7 @@ describe User do
     expect(user.pw).to eq BCrypt::Password.new(user.pw)
   end
 
+  context '#unique?'
   it 'can prevent user creation if username already taken' do
     user = User.add_user(username: 'test', email: 'test@makers.co.uk', fullname: 'test user', pw: 'abc123')
     user2 = User.add_user(username: 'test', email: 'test2@makers.co.uk', fullname: 'test2 user', pw: 'abc123')
