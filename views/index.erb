@@ -27,6 +27,21 @@
         </form>
       </div> 
 
+      <% if @current_user == nil %>
+       <div id="sign-up">
+        <form action="/sign-up" method="get">
+          <input type="submit" value="Sign up for a MakersBnb account">
+        </form>
+      </div> 
+      <% else %>
+      <div id="log-out">
+        <form action="/log-out" method="post">
+          <input type="submit" value="Logout">
+        </form>
+      </div> 
+      <% end %>
+      
+
     <div>
 
   </body>

@@ -3,18 +3,22 @@ require 'sinatra/reloader'
 require 'sinatra/flash'
 require_relative './database_connection_setup'
 require_relative './lib/spaces'
+require_relative './lib/sign_up_validator'
+require_relative './lib/user'
 
 
 class MakersBnb < Sinatra::Base
   enable :sessions
 
+  register Sinatra::Flash
+
   configure :development do
     register Sinatra::Reloader
-    register Sinatra::Flash
   end
 
   # routes:
   get '/' do
+    @current_user = session[:user_id]
     erb(:index)
   end
 
@@ -36,17 +40,19 @@ class MakersBnb < Sinatra::Base
   end
 
   post '/sign-up-details' do
-    session['sign_up_data'] = params
-    if SignUp.password_valid?(params['password'], params['password_confirm'])
-      if SignUp.validate(params['username'], params['email'])
-        # User.add_user(params)
-        flash[:welcome] = "Welcome #{params['name']}"
-        redirect '/'
-      else
-        flash[:details_in_use] = "Username or email already registered"
-      end
+    # session['sign_up_data'] = params
+    if SignUpValidator.password_valid?(params['password'], params['password_confirm'])
+      # if SignUp.validate(params['username'], params['email'])
+      user = User.add_user(username: params[:username], email: params[:email], fullname: params[:fullname], pw: params[:password])
+      session[:user_id], session[:username] = user.user_id, user.username
+      p session[:user_id], session[:username]
+      
+      flash[:welcome] = "Welcome #{params[:username]}"
+      redirect '/'
+    # else
+    #     flash[:details_in_use] = "Username or email already registered"
     else
-      flash[:password_error] = "Wrong password"
+      flash[:password_error] = "Passwords don't match!"
       redirect '/sign-up'
     end
     # TODO create model to check if username and email are unique (commented out in sign_up.rb - requires database)
