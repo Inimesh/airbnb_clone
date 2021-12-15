@@ -1,8 +1,8 @@
 require 'sinatra/base'
 require 'sinatra/reloader'
 require 'sinatra/flash'
-require './database_connection_setup'
-require './lib/spaces'
+require_relative './database_connection_setup'
+require_relative './lib/spaces'
 
 
 class MakersBnb < Sinatra::Base
@@ -35,7 +35,7 @@ class MakersBnb < Sinatra::Base
     erb(:sign_up)
   end
 
-  post '/sign-up' do
+  post '/sign-up-details' do
     session['sign_up_data'] = params
     if SignUp.password_valid?(params['password'], params['password_confirm'])
       if SignUp.validate(params['username'], params['email'])
