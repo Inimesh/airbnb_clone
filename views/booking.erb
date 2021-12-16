@@ -1,5 +1,6 @@
-   <p>Choose your dates:</p>
-  <form action="/booking/:space_id/book" method="post">
+<h2>Choose your dates:<h2>
+<form action="/booking/:space_id/book" method="post">
+
  <%@availability.each do |date|%>
 
     <div class="<%=date['dates']%> space-availability">
@@ -7,7 +8,7 @@
       <label for="<%=date['dates']%>"><%=date['dates']%></label>
     </div>
 
-<%end%>
+  <%end%>
 
  <input type="submit" value="Request">
 

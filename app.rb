@@ -28,13 +28,9 @@ class MakersBnb < Sinatra::Base
 
   get '/add_space' do
     erb(:add_space)
-  end
+  end 
 
-  get '/confirm_add' do
-    erb(:confirm_add)
-  end
-
-  post '/new_space' do
+  post '/add_space' do
     @user_id = session[:user_id]
     @space_id = Spaces.add_space(params[:space_name], params[:space_description], params[:price_per_night], @user_id)
     Spaces.add_availability(@space_id, params[:stay_start], params[:stay_finish])
@@ -43,8 +39,8 @@ class MakersBnb < Sinatra::Base
 
   get '/booking/:space_id/book' do
     @space_id = params[:space_id]
+    @current_space = Spaces.find(params[:space_id])
     @availability = Spaces.availability(@space_id)
-    # @current_space = Spaces.find(params[:space_id])
     erb(:booking)
   end
 
@@ -52,8 +48,17 @@ class MakersBnb < Sinatra::Base
     print params
   end
 
-  # post '/edit_space/:space_id/edit' do
-  # end
+  get '/edit_space/:space_id/edit' do
+    @space_id = params[:space_id]
+    redirect '/main_view'
+  end
+
+  post '/edit_space/:space_id/edit' do
+    # @space_id = params[:space_id]
+    # Spaces.edit_space(params[:space_name], params[:space_description], params[:price_per_night], @user_id)
+    # Spaces.add_availability(@space_id, params[:stay_start], params[:stay_finish])
+    # erb(:edit_space)
+  end
 
   get '/sign-up' do
     erb(:sign_up)

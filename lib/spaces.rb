@@ -14,12 +14,16 @@ class Spaces
     @user_id = user_id
   end
 
-    def self.all
+  def self.all
     table = DatabaseConnection.query('SELECT * FROM spaces ORDER BY space_id ASC') 
     table.map do |space|
       Spaces.new(space['space_id'], space['space_name'], space['space_description'], 
      space['price_per_night'], space['user_id'])
     end  
+  end
+
+  def self.find(space_id)
+    self.all.select { |space| space.space_id == space_id }.first
   end
 
   def space_display
