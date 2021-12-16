@@ -67,6 +67,24 @@ fullname: params[:fullname], pw: params[:password])
     # TODO have session['logged_in_user'] = User.instance
   end
   
+  get '/login' do
+    erb :login
+  end
+
+  post '/login-details' do
+    if User.unique?(params[:username])
+      flash[:invalid_username] = "Username does not exist"
+      redirect '/'
+    elsif User.authenticate(username: params[:username], password: params[:password])
+      user = User.find_by(params[:username])
+      p user
+      session[:user_id] = user.user_id
+      session[:username] = user.username
+
+      p session[:user_id], session[:username]
+      redirect '/main_view'
+    end
+  end
 
   # # Start the server if this file is executed directly (do not change the line below)
   run! if app_file == $0
