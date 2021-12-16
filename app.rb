@@ -24,23 +24,49 @@ class MakersBnb < Sinatra::Base
 
   get '/main_view' do
     @spaces = Spaces.all
+    @current_user = session[:user_id]
     erb(:main_view)
   end
 
   get '/add_space' do
     @current_user = session[:user_id]
     erb(:add_space)
+  end 
+
+  post '/add_space' do
+    @user_id = session[:user_id]
+    @space_id = Spaces.add_space(params[:space_name], params[:space_description], params[:price_per_night], @user_id)
+    Spaces.add_availability(@space_id, params[:stay_start], params[:stay_finish])
+    redirect '/main_view'
   end
 
-  get '/confirm_add' do
-    erb(:confirm_add)
+  get '/booking/:space_id/book' do
+    @space_id = params[:space_id]
+    @current_space = Spaces.find(params[:space_id])
+    @availability = Spaces.availability(@space_id)
+    erb(:booking)
+  end
+
+  post '/booking/:space_id/book' do
+    redirect '/main_view'
   end
 
   post '/new_space' do
-    Spaces.add_space(params[:space_name], params[:space_description], params[:price_per_night], 
-params[:user_id])
-    # Spaces.add_availability(params[:stay_start], params[:stay_finish])
+    Spaces.add_space(params[:space_name], params[:space_description], params[:price_per_night], params[:user_id])
+    Spaces.add_availability(params[:stay_start], params[:stay_finish])
     redirect '/main_view'
+  end
+    
+  get '/edit_space/:space_id/edit' do
+    @space_id = params[:space_id]
+    redirect '/main_view'
+  end
+
+  post '/edit_space/:space_id/edit' do
+    # @space_id = params[:space_id]
+    # Spaces.edit_space(params[:space_name], params[:space_description], params[:price_per_night], @user_id)
+    # Spaces.add_availability(@space_id, params[:stay_start], params[:stay_finish])
+    # erb(:edit_space)
   end
 
   get '/sign-up' do
@@ -62,7 +88,7 @@ params[:user_id])
       end
     else
       flash[:password_error] = "Passwords don't match!"
-      redirect '/sign-up'
+      redirect '/main_view'
     end
     # TODO create model to check if username and email are unique (commented out in sign_up.rb - requires database)
     # TODO have session['logged_in_user'] = User.instance
@@ -94,6 +120,31 @@ params[:user_id])
   end
 
   
+  get '/login' do
+    erb :login
+  end
+
+  post '/login-details' do
+    if User.unique?(params[:username])
+      flash[:invalid_username] = "Username does not exist"
+      redirect '/login'
+    elsif User.authenticate(username: params[:username], password: params[:password])
+      user = User.find_by(params[:username])
+      session[:user_id] = user.user_id
+      session[:username] = user.username
+      redirect '/main_view'
+    else
+      flash[:invalid_password] = "Password does not match"
+      redirect '/login'
+    end
+  end
+
+  post '/logout' do
+    session[:user_id] = nil
+    session[:username] = nil
+    flash[:logout] = 'You have successfully logged out'
+    redirect '/'
+  end
 
   # # Start the server if this file is executed directly (do not change the line below)
   run! if app_file == $0

@@ -5,6 +5,7 @@ require 'bcrypt'
 describe User do
   context '#add_user'
   it 'can create a new user' do
+    pw = 'abc123'
     user = User.add_user(username: 'test', email: 'test@makers.co.uk', fullname: 'test user', pw: 'abc123')
 
     persisted_data = persisted_data(user.user_id)
@@ -14,7 +15,7 @@ describe User do
     expect(user.username).to eq 'test'
     expect(user.email).to eq 'test@makers.co.uk'
     expect(user.fullname).to eq 'test user'
-    expect(user.pw).to eq BCrypt::Password.new(user.pw)
+    expect(BCrypt::Password.new(user.pw)).to eq pw
   end
 
   context '#unique?'

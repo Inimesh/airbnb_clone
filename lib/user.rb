@@ -32,4 +32,22 @@ fullname: rs[0]['fullname'], pw: rs[0]['pw'])
 [username])
     return true if rs[0]['exists'] == 'f'
   end
+
+  def self.find_by(username)
+    rs = DatabaseConnection.query('SELECT * FROM users WHERE username = $1;', [username])
+    if rs.ntuples != 0
+      User.new(user_id: rs[0]['user_id'], username: rs[0]['username'], email: rs[0]['email'], fullname: rs[0]['fullname'], pw: rs[0]['pw'])
+    else
+      return false
+    end
+  end
+
+  def self.authenticate(username:, password:)
+    rs = DatabaseConnection.query('SELECT * FROM users WHERE username = $1;', [username])
+    if rs.ntuples == 1 && BCrypt::Password.new(rs[0]['pw']) == password
+      return true
+    else
+      return false
+    end
+  end
 end
