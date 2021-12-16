@@ -41,9 +41,19 @@ class MakersBnb < Sinatra::Base
     redirect '/main_view'
   end
 
-  post '/edit_space/:space_id/edit' do
-    
+  get '/booking/:space_id/book' do
+    @space_id = params[:space_id]
+    @availability = Spaces.availability(@space_id)
+    # @current_space = Spaces.find(params[:space_id])
+    erb(:booking)
   end
+
+  post '/booking/:space_id/book' do
+    print params
+  end
+
+  # post '/edit_space/:space_id/edit' do
+  # end
 
   get '/sign-up' do
     erb(:sign_up)

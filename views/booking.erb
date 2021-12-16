@@ -1,0 +1,14 @@
+   <p>Choose your dates:</p>
+  <form action="/booking/:space_id/book" method="post">
+ <%@availability.each do |date|%>
+
+    <div class="<%=date['dates']%> space-availability">
+      <input type="checkbox" id="<%=date['dates']%>" name="<%=date['availability_id']%>">
+      <label for="<%=date['dates']%>"><%=date['dates']%></label>
+    </div>
+
+<%end%>
+
+ <input type="submit" value="Request">
+
+</form>
