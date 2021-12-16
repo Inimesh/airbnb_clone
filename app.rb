@@ -45,7 +45,7 @@ class MakersBnb < Sinatra::Base
   end
 
   post '/booking/:space_id/book' do
-    print params
+    redirect '/main_view'
   end
 
   get '/edit_space/:space_id/edit' do
