@@ -50,13 +50,20 @@ params[:price_per_night], @user_id)
 
   post '/booking/:space_id/book' do
     dates_selected = []
+    params.each_key { |k| dates_selected << k unless k == "space_id" }
     @current_space = Spaces.find(params[:space_id])
-    params.each do |date, availability_id|
-      unless date == "space_id"
-        dates_selected << date
-        Request.add_request(availability_id: availability_id, user_id: session[:user_id])
+
+    dates_selected.each do |date|
+      if Request.duplicate?(params[date], session[:user_id])
+        flash[:error_dates_requested] = "You have already requested this space for date(s) selected"
+        redirect "/booking/#{@current_space.space_id}/book"
       end
-    end 
+    end
+    
+    dates_selected.each do |date|
+      Request.add_request(availability_id: params[date], user_id: session[:user_id])
+    end
+
     flash[:thanks] = "Your request for #{@current_space.space_name} has been submitted to the host for the following dates: #{dates_selected.join(", ")}"
     redirect '/main_view'
   end
