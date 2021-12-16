@@ -30,4 +30,5 @@ fullname: rs[0]['fullname'], pw: rs[0]['pw'])
 [username])
     return true if rs[0]['exists'] == 'f'
   end
+
 end
