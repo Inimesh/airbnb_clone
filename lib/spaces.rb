@@ -1,5 +1,7 @@
 require 'pg'
+require 'date'
 require_relative 'database_connection'
+
 
 class Spaces
   attr_reader :space_id, :space_name, :space_description, :price_per_night, :user_id
@@ -10,20 +12,9 @@ class Spaces
     @space_description = space_description
     @price_per_night = price_per_night
     @user_id = user_id
-
   end
 
-  def self.add_space(space_name, space_description, price_per_night, user_id)
-    DatabaseConnection.query(
-"INSERT INTO spaces (space_name, space_description, price_per_night, user_id) VALUES ($1, $2, $3, $4)", [
-  space_name, space_description, price_per_night, user_id])
-  end
-
-  def add_availability(stay_start, stay_finish)
-    
-  end
-  
-  def self.all
+    def self.all
     table = DatabaseConnection.query('SELECT * FROM spaces ORDER BY space_id ASC') 
     table.map do |space|
       Spaces.new(space['space_id'], space['space_name'], space['space_description'], 
@@ -32,8 +23,25 @@ class Spaces
   end
 
   def space_display
-    "<h2>#{@space_name}</h2>
-    <h3>#{@space_description}</h3>"
+      "<h2>#{@space_name}</h2>
+      <h3>#{@space_description}</h3>"
+  end
+
+  def self.add_space(space_name, space_description, price_per_night, user_id)
+    rs = DatabaseConnection.query(
+"INSERT INTO spaces (space_name, space_description, price_per_night, user_id) VALUES ('#{space_name}', '#{space_description}', #{price_per_night}, #{user_id}) RETURNING space_id;")
+    rs[0]['space_id']
+  end
+
+  def self.add_availability(space_id, stay_start, stay_finish)
+    dates = (Date.parse(stay_start).strftime..Date.parse(stay_finish).strftime).to_a
+    
+    dates.each do |date| 
+      DatabaseConnection.query(
+        "INSERT INTO availability (space_id, dates) VALUES ($1, $2)", [
+          space_id, date])
+    end
+    
   end
 
 end

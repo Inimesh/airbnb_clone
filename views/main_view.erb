@@ -1,5 +1,22 @@
     <%@spaces.each do |space|%>
-    <%=space.space_display%>
+
+      <div class="<%=space.space_id%> space-display">
+        <h2><%=space.space_name%></h2>
+        <h3><%=space.space_description%></h3>
+      </div>
+
+      <div class="<%=space.space_id%> space-edit-button">
+        <button type='submit' value='Edit'>
+          <i class='fas fa-edit'></i>
+        </button>
+      </div>
+
+      <div class="<%=space.space_id%> space-delete-button">
+        <button type='submit' value='Delete'>
+          <i class='fas fa-trash-alt'></i>
+        </button>
+      </div>
+     
     <%end%>
 
     <div class="main-container">

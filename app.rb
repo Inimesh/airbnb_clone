@@ -35,10 +35,10 @@ class MakersBnb < Sinatra::Base
   end
 
   post '/new_space' do
-    Spaces.add_space(params[:space_name], params[:space_description], params[:price_per_night], 
-params[:user_id])
-    Spaces.add_availability(params[:stay_start], params[:stay_finish])
-    redirect '/confirm_add'
+    @user_id = session[:user_id]
+    Spaces.add_space(params[:space_name], params[:space_description], params[:price_per_night], @user_id)
+    Spaces.add_availability(params[:space_id], params[:stay_start], params[:stay_finish])
+    redirect '/main_view'
   end
 
   get '/sign-up' do
@@ -56,12 +56,12 @@ fullname: params[:fullname], pw: params[:password])
       p session[:user_id], session[:username]
       
       flash[:welcome] = "Welcome #{params[:username]}"
-      redirect '/'
+      redirect '/main_view'
     # else
     #     flash[:details_in_use] = "Username or email already registered"
     else
       flash[:password_error] = "Passwords don't match!"
-      redirect '/sign-up'
+      redirect '/main_view'
     end
     # TODO create model to check if username and email are unique (commented out in sign_up.rb - requires database)
     # TODO have session['logged_in_user'] = User.instance

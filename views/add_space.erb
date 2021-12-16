@@ -1,16 +1,18 @@
  <form action="/new_space" method="post">
     <input type="text" name="space_name" placeholder="Your Space Name">
     <input type="textarea" name="space_description" placeholder="Space Description">
-    <input type="text" name="price_per_night" placeholder="Price Description">
-    <input type="hidden" name="user_id" value="1">
+    <input type="text" name="price_per_night" placeholder="Price/night">
     <input type="submit" value="Add">
+    
 
     <label for="start">Start date:</label>
     <input type="date" id="start" name="stay_start"
-    value="2018-07-22"
-    min="2021-01-01" max="2022-12-31">
+    value="<%=Date.today.strftime%>"
+    min="<%=Date.today.strftime%>" max="<%=(Date.today + 364).strftime%>">
+
     <label for="end">End Date:</label>
     <input type="date" id="end" name="stay_finish"
-    value="2021-12-15"
-    min="2021-12-01" max="2022-12-31">
+    value="<%=(Date.today + 14).strftime%>" 
+    min="<%=(Date.today + 1).strftime%>" max="<%=(Date.today + 365).strftime%>">
+    <%# extra = can we make sure end date is not before start date? %>
 </form>
