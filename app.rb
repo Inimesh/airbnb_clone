@@ -23,6 +23,7 @@ class MakersBnb < Sinatra::Base
 
   get '/main_view' do
     @spaces = Spaces.all
+    @current_user = session[:user_id]
     erb(:main_view)
   end
 
@@ -74,7 +75,7 @@ fullname: params[:fullname], pw: params[:password])
   post '/login-details' do
     if User.unique?(params[:username])
       flash[:invalid_username] = "Username does not exist"
-      redirect '/'
+      redirect '/login'
     elsif User.authenticate(username: params[:username], password: params[:password])
       user = User.find_by(params[:username])
       session[:user_id] = user.user_id
@@ -82,8 +83,15 @@ fullname: params[:fullname], pw: params[:password])
       redirect '/main_view'
     else
       flash[:invalid_password] = "Password does not match"
-      redirect '/'
+      redirect '/login'
     end
+  end
+
+  post '/logout' do
+    session[:user_id] = nil
+    session[:username] = nil
+    flash[:logout] = 'You have successfully logged out'
+    redirect '/'
   end
 
   # # Start the server if this file is executed directly (do not change the line below)

@@ -42,7 +42,7 @@ fullname: rs[0]['fullname'], pw: rs[0]['pw'])
 
   def self.authenticate(username:, password:)
     rs = DatabaseConnection.query('SELECT * FROM users WHERE username = $1;', [username])
-    if BCrypt::Password.new(rs[0]['pw']) == password
+    if rs.ntuples == 1 && BCrypt::Password.new(rs[0]['pw']) == password
       return true
     else
       return false
