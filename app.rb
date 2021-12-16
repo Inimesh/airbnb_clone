@@ -41,6 +41,10 @@ class MakersBnb < Sinatra::Base
     redirect '/main_view'
   end
 
+  post '/edit_space/:space_id/edit' do
+    
+  end
+
   get '/sign-up' do
     erb(:sign_up)
   end
