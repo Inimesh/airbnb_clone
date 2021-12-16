@@ -1,1 +1,34 @@
-Placeholder
+List of bookable dates for a given space
+
+<%# <ul>
+<form action='/booking/<%=space.space_id %>/book-confirmation' method='post'>
+    <%# <input type="submit"value="Book"> %> %>
+      
+    <%# <%@availability.each do |av|%>
+    <%# <li class="availability" id="<%= Space.av_id %>""
+    <%# <%=av.display%> %> %>
+    <%# <input type='checkbox' name='av.index' value=Space.av_id>
+    <label for='av.index'></label> <%= Space.av_date %> <label> %>
+    <%# </li> %>
+    <%# <%end%> %>
+    <%# </form> %>
+    <%# </ul> %>
+
+    <ul>
+<form action='/test' method='post'>
+    <input type="submit"value="Book">
+      <br><br><br><br><br><br><br>
+   <%# <li class="availability" id="<%= %>" > %>
+   <li>
+   <%# name should be iterating through each index position of the availabilities of a given space  %>
+   <%# value should be the actual availability_id %>
+   <%# html label below should display the actual date for a given availability_id %>
+    <input type='checkbox' name='av1' value=3> 
+    <label for='av1'> 16/12/21 </label>
+       <input type='checkbox' name='av2' value=4>
+    <label for='av2'> 17/12/21 </label>  
+       <input type='checkbox' name='av3' value=5>
+    <label for='av3'> 18/12/21 </label>    
+    </li>
+    </form>
+    </ul>

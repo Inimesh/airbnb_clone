@@ -3,10 +3,10 @@ require_relative './database_connection'
 class Request
   attr_reader :request_id, :availability_id, :booked, :user_id
 
-  def initialize(request_id:, availability_id:, user_id:)
+  def initialize(request_id:, availability_id:, booked:, user_id:)
     @request_id = request_id
     @availability_id = availability_id
-    @booked = false
+    @booked = booked
     @user_id = user_id
   end
 

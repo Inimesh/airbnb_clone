@@ -36,10 +36,10 @@ class Spaces
     <h3>#{@space_description}</h3>"
   end
 
-  def self.find(space_id)
-    rs = DatabaseConnection.query('SELECT * FROM spaces WHERE space_id = $1;', [space_id])
-    Spaces.new(rs[0]['space_id'], rs[0]['space_name'], rs[0]['space_description'], rs[0]['price_per_night'], rs[0]['user_id'])
-  end
+  # def self.find(space_id)
+  #   rs = DatabaseConnection.query('SELECT * FROM spaces WHERE space_id = $1;', [space_id])
+  #   Spaces.new(rs[0]['space_id'], rs[0]['space_name'], rs[0]['space_description'], rs[0]['price_per_night'], rs[0]['user_id'])
+  # end
 
 end
 

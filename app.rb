@@ -5,6 +5,7 @@ require_relative './database_connection_setup'
 require_relative './lib/spaces'
 require_relative './lib/sign_up_validator'
 require_relative './lib/user'
+require_relative './lib/request'
 
 class MakersBnb < Sinatra::Base
   enable :sessions
@@ -68,10 +69,30 @@ params[:user_id])
   end
 
   get '/booking/:space_id/book' do
-    @current_space = Spaces.find(params[:space_id])
+    @current_space = params[:space_id]
     erb :booking
-    
   end
+
+  post '/booking/:space_id/book-confirmation' do
+    @current_user = session[:user_id]
+    @selected_availabilities = params[:selected_availabilities]
+
+  end 
+
+  post '/test' do
+    p params
+    @current_user = session[:user_id]
+    dates_selected = []
+    params.each_value do |value|
+      dates_selected << Spaces.date_for_id
+      p Request.add_request(availability_id: value, user_id: @current_user)
+    end 
+
+    flash[:thanks] = 'Thanks for your booking at space_id for dates_selected.each '
+
+    redirect '/main_view'
+  end
+
   
 
   # # Start the server if this file is executed directly (do not change the line below)
