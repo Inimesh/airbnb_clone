@@ -49,6 +49,9 @@ class Spaces
   end
 
   def self.availability(space_id)
+    # Check for dates that are booked and make sure that they are not displayed to the user as availabilities
+    # We need to make a query to the 'request' table and find out which ones have booked = TRUE
+    # We want to NOT include these booked ones in our availabilities
     availabilities = DatabaseConnection.query("SELECT availability_id, dates FROM availability WHERE space_id = ($1);", [space_id])
   end
 
