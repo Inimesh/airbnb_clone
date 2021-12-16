@@ -15,7 +15,7 @@ class User
   def self.add_user(username:, email:, fullname:, pw:)
     encrypted_password = BCrypt::Password.create(pw)
     
-    return unless User.unique?(username)
+    return nil unless User.unique?(username)
 
     rs = DatabaseConnection.query(
 'INSERT INTO users(username, email, fullname, pw) VALUES ($1, $2, $3, $4) RETURNING user_id, username, email, fullname, pw;', [
@@ -25,6 +25,8 @@ class User
 fullname: rs[0]['fullname'], pw: rs[0]['pw'])
   end
 
+  private 
+  
   def self.unique?(username)
     rs = DatabaseConnection.query("SELECT EXISTS(SELECT * FROM users WHERE username = $1)", 
 [username])

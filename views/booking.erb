@@ -4,7 +4,7 @@
  <%@availability.each do |date|%>
 
     <div class="<%=date['dates']%> space-availability">
-      <input type="checkbox" id="<%=date['dates']%>" name="<%=date['availability_id']%>">
+      <input type="checkbox" id="<%=date['dates']%>" name="<%=date['availability_id']%>" value="<%=date['availability_id']%>">
       <label for="<%=date['dates']%>"><%=date['dates']%></label>
     </div>
 
