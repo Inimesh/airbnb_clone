@@ -77,12 +77,12 @@ fullname: params[:fullname], pw: params[:password])
       redirect '/'
     elsif User.authenticate(username: params[:username], password: params[:password])
       user = User.find_by(params[:username])
-      p user
       session[:user_id] = user.user_id
       session[:username] = user.username
-
-      p session[:user_id], session[:username]
       redirect '/main_view'
+    else
+      flash[:invalid_password] = "Password does not match"
+      redirect '/'
     end
   end
 
