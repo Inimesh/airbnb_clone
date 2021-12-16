@@ -1,18 +1,20 @@
- <form action="/add_space" method="post">
-    <input type="text" name="space_name" placeholder="Your Space Name">
-    <input type="textarea" name="space_description" placeholder="Space Description">
-    <input type="text" name="price_per_night" placeholder="Price/night">
+ <div class="main-content">  
+    <form action="/add_space" method="post">
+        <input type="text" name="space_name" placeholder="Your Space Name">
+        <input type="textarea" name="space_description" placeholder="Space Description"><br>
+        <input type="text" name="price_per_night" placeholder="Price/night"><br>
 
-    <label for="start">Start date:</label>
-    <input type="date" id="start" name="stay_start"
-    value="<%=Date.today.strftime%>"
-    min="<%=Date.today.strftime%>" max="<%=(Date.today + 364).strftime%>">
+        <label for="start">Start date:</label>
+        <input type="date" id="start" name="stay_start"
+        value="<%=Date.today.strftime%>"
+        min="<%=Date.today.strftime%>" max="<%=(Date.today + 364).strftime%>"><br>
 
-    <label for="end">End Date:</label>
-    <input type="date" id="end" name="stay_finish"
-    value="<%=(Date.today + 14).strftime%>" 
-    min="<%=(Date.today + 1).strftime%>" max="<%=(Date.today + 365).strftime%>">
-    
-    <input type="submit" value="Add">
-    <%# extra = can we make sure end date is not before start date? %>
-</form>
+        <label for="end">End Date:</label>
+        <input type="date" id="end" name="stay_finish"
+        value="<%=(Date.today + 14).strftime%>" 
+        min="<%=(Date.today + 1).strftime%>" max="<%=(Date.today + 365).strftime%>"><br>
+        
+        <input type="submit" class="btn btn-secondary" value="Add">
+        <%# extra = can we make sure end date is not before start date? %>
+    </form>
+</div>

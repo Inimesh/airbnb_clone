@@ -139,7 +139,7 @@ class MakersBnb < Sinatra::Base
     end
   end
 
-  post '/logout' do
+  post '/log-out' do
     session[:user_id] = nil
     session[:username] = nil
     flash[:logout] = 'You have successfully logged out'
