@@ -46,9 +46,9 @@ class Spaces
 
 end
 
-#   def self.delete(id)
-#     DatabaseConnection.query("DELETE FROM bookmarks WHERE id = ($1)", [id])
-#   end
+  def self.delete(id)
+    DatabaseConnection.query("DELETE FROM spaces WHERE id = ($1)", [id])
+  end
 
 #   def self.edit(id, new_url, new_title)
 #     DatabaseConnection.query("UPDATE bookmarks SET url = ($1), title = ($2) WHERE id = ($3)", [new_url, new_title, id])
