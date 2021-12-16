@@ -1,7 +1,8 @@
- <form action="/add_space" method="post">
+ <form action="/edit_space/:space_id/edit" method="post">
     <input type="text" name="space_name" placeholder="Your Space Name">
     <input type="textarea" name="space_description" placeholder="Space Description">
     <input type="text" name="price_per_night" placeholder="Price/night">
+    
 
     <label for="start">Start date:</label>
     <input type="date" id="start" name="stay_start"
@@ -13,6 +14,6 @@
     value="<%=(Date.today + 14).strftime%>" 
     min="<%=(Date.today + 1).strftime%>" max="<%=(Date.today + 365).strftime%>">
     
-    <input type="submit" value="Add">
+    <input type="submit" value="Edit">
     <%# extra = can we make sure end date is not before start date? %>
 </form>
