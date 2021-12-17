@@ -1,17 +1,34 @@
 <h1>Review Requests</h1>
 
-<% each space that the logged in user owns %>
-  # SQL query searches spaces by user id
-  <% for each guest user that has booked the sapce %>
-    # 
-    <% display each date the guest user has booked as a checkbox %>
-    <form action=""></form>
+
+  <%@space_id_array.each do |space_id|%>
+
+    <%space = Spaces.find(space_id)%>
+    <%=space.space_display%><br>
+
+    <%@user_id_array = Spaces.find_guest(space_id)%>
+    <%@user_id_array.each do |user_id|%>
+      <%user = User.find(user_id)%>
+      <%=user.fullname%><br>
+      <%@guest_date_array = Spaces.find_guest_dates(space.space_id, user.user_id)%>
+      <%@guest_date_array.each do |date|%>
+        <%=date%><br>
+      <%end%>
+    <%end%>
+
+  <%end%>
 
 
-    <% end loop %>
+  <%# <% for each guest user that has booked the sapce %>
+    
+    <%# <% display each date the guest user has booked as a checkbox %>
+    <%# <form action=""></form> %> 
 
 
-  <% end loop %>
+    <%# <% end loop %>
 
 
-<% end loop %>
+  <%# <% end loop %> 
+
+
+<%# r %>

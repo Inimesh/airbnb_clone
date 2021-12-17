@@ -60,7 +60,8 @@ class MakersBnb < Sinatra::Base
 
 
   get '/review-request/:host_id' do
-    space_id_array = Spaces.find_hosts_spaces(params[:host_id])
+    @space_id_array = Spaces.find_hosts_spaces(params[:host_id])
+    # @user_id_array =  Spaces.find_guest(space_id)
     erb :host_review_requests
   end
 
