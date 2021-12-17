@@ -17,3 +17,10 @@ def add_space
   fill_in 'stay_finish', with: '2021-12-18'
   click_button 'Add'
 end
+
+def add_user_space_and_avaliability
+  user = User.add_user(username: 'test', email: 'test@makers.co.uk', fullname: 'test user', pw: 'abc123')
+  space_id = Spaces.add_space('Cozy Cottage','Very cozy','50',user.user_id.to_s)
+  Spaces.add_availability(space_id, '2022-01-02', '2022-01-12')
+  space_id
+end

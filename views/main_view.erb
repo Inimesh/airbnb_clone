@@ -1,12 +1,4 @@
-      <% if @current_user != nil %>
-      <div id="log-out">
-        <form action="/logout" method="post">
-          <input type="submit" value="logout">
-        </form>
-      </div> >
-       <% end %>
-
-    
+<div class="main-content">  
     <%@spaces.each do |space|%>
 
       <div id="space-block-<%=space.space_id%>">
@@ -19,13 +11,14 @@
         <div class="<%=space.space_id%> space-book"> 
           <form action='/booking/<%=space.space_id%>/book' method='get'>
             <input type="hidden" value="<%=space.space_id%>">
-            <input type="submit" value="Book">
+            <input type="submit" class="btn btn-secondary" value="Book">
           </form>
         </div>
 
         <div class="<%=space.space_id%> space-edit-button">
           <form action="/edit_space/<%=space.space_id%>/edit" method='get'>
-            <button type='submit' value='Edit'>
+            <input type="hidden" value="<%=space.space_id%>"> #maybe_delete
+            <button type='submit' class="btn btn-secondary" value='Edit'>
               <i class='fas fa-edit'></i>
             </button>
           </form>
@@ -33,7 +26,7 @@
 
         <div class="<%=space.space_id%> space-delete-button">
           <form action="/delete_space/<%=space.space_id%>/delete" method='post'>
-            <button type='submit' value='Delete'>
+            <button type='submit' class="btn btn-secondary" value='Delete'>
               <i class='fas fa-trash-alt'></i>
             </button>
           </form>
@@ -48,7 +41,9 @@
     <div class="main-container">
       <div id="add-space-button">
         <form action="/add_space" method="get">
-          <input type="submit" value="Add Space">
+          <input type="submit" class="btn btn-secondary" value="Add Space">
         </form>
       </div> 
     <div>
+  </div>
+</div>

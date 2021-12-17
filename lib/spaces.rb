@@ -2,7 +2,6 @@ require 'pg'
 require 'date'
 require_relative 'database_connection'
 
-
 class Spaces
   attr_reader :space_id, :space_name, :space_description, :price_per_night, :user_id
 
@@ -23,11 +22,11 @@ class Spaces
   end
 
   def self.find(space_id)
-    self.all.select { |space| space.space_id == space_id }.first
+    all.select { |space| space.space_id == space_id }.first
   end
 
   def space_display
-      "<h2>#{@space_name}</h2>
+    "<h2>#{@space_name}</h2>
       <h3>#{@space_description}</h3>"
   end
 
@@ -54,11 +53,6 @@ class Spaces
   end
 
   def self.availability(space_id)
-    # Check for dates that are booked and make sure that they are not displayed to the user as availabilities
-    # We need to make a query to the 'request' table and find out which ones have booked = TRUE
-    # We want to NOT include these booked ones in our availabilities
-
-    # availabilities = DatabaseConnection.query("SELECT availability_id, dates FROM availability WHERE space_id = ($1);", [space_id])
 
     DatabaseConnection.query("SELECT availability.availability_id, dates
     FROM availability

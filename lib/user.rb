@@ -24,8 +24,6 @@ class User
     User.new(user_id: rs[0]['user_id'], username: rs[0]['username'], email: rs[0]['email'], 
 fullname: rs[0]['fullname'], pw: rs[0]['pw'])
   end
-
-  private 
   
   def self.unique?(username)
     rs = DatabaseConnection.query("SELECT EXISTS(SELECT * FROM users WHERE username = $1)", 
@@ -35,10 +33,11 @@ fullname: rs[0]['fullname'], pw: rs[0]['pw'])
 
   def self.find_by(username)
     rs = DatabaseConnection.query('SELECT * FROM users WHERE username = $1;', [username])
-    if rs.ntuples != 0
-      User.new(user_id: rs[0]['user_id'], username: rs[0]['username'], email: rs[0]['email'], fullname: rs[0]['fullname'], pw: rs[0]['pw'])
-    else
+    if rs.ntuples == 0
       return false
+    else
+      User.new(user_id: rs[0]['user_id'], username: rs[0]['username'], email: rs[0]['email'], 
+fullname: rs[0]['fullname'], pw: rs[0]['pw'])
     end
   end
 
