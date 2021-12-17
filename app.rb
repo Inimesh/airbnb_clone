@@ -41,6 +41,23 @@ params[:price_per_night], @user_id)
     redirect '/main_view'
   end
 
+  get '/edit_space/:space_id/edit' do
+    @current_space = Spaces.find(params[:space_id])
+    @availability = Spaces.availability(params[:space_id])
+    erb(:edit_space)
+  end
+
+  post '/edit_space/:space_id/edit' do
+    @current_space = Spaces.find(params[:space_id])
+    Spaces.edit_space(params[:space_id], params[:space_name], params[:space_description], params[:price_per_night])
+    Spaces.add_availability(params[:space_id], params[:stay_start], params[:stay_finish])
+    redirect '/main_view'
+  end
+
+  post '/delete_space/:space_id/delete' do
+    Spaces.delete(params[:space_id])
+    redirect '/main_view'
+  end
   get '/booking/:space_id/book' do
     @space_id = params[:space_id]
     @current_space = Spaces.find(params[:space_id])
@@ -68,23 +85,22 @@ params[:price_per_night], @user_id)
     redirect '/main_view'
   end
 
-  post '/new_space' do
-    Spaces.add_space(params[:space_name], params[:space_description], params[:price_per_night], 
-params[:user_id])
-    Spaces.add_availability(params[:stay_start], params[:stay_finish])
-    redirect '/main_view'
-  end
-    
-  get '/edit_space/:space_id/edit' do
-    @space_id = params[:space_id]
-    redirect '/main_view'
-  end
+#   post '/new_space' do
+#     Spaces.add_space(params[:space_name], params[:space_description], params[:price_per_night], 
+# params[:user_id])
+#     Spaces.add_availability(params[:stay_start], params[:stay_finish])
+#     redirect '/main_view'
+#   end
 
-  post '/edit_space/:space_id/edit' do
-    # @space_id = params[:space_id]
-    # Spaces.edit_space(params[:space_name], params[:space_description], params[:price_per_night], @user_id)
-    # Spaces.add_availability(@space_id, params[:stay_start], params[:stay_finish])
-    # erb(:edit_space)
+
+
+  # post '/booking/:space_id/book' do
+  #   redirect '/main_view'
+  # end
+
+  post '/delete_availability/:availability_id/delete' do
+    Spaces.delete_availability(params[:availability_id])
+    redirect '/main_view'
   end
 
   get '/sign-up' do

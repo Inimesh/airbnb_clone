@@ -6,7 +6,8 @@ describe Spaces do
   describe '#add_space' do
 
     it 'adds a new space' do
-      Spaces.add_space('Cosy Cottage', 'Extremely cosy cottage in the woods', '70')
+      User.add_user(username: 'test', email: 'test@makers.co.uk', fullname: 'test user', pw: 'abc123')
+      Spaces.add_space('Cosy Cottage', 'Extremely cosy cottage in the woods', '70', 1)
       expect(Spaces.all.count).to eq 1
       expect(Spaces.all[0].space_name).to eq 'Cosy Cottage'
     end
@@ -14,12 +15,15 @@ describe Spaces do
   end
 
   describe '#all' do
-    it 'returns an array of Spaces objects' do
-      Spaces.add_space('Cosy Cottage', 'Extremely cosy cottage in the woods', '70')
-      space = Spaces.add_space('Cosy Villa', 'Extremely villa cottage in the woods', '50')
-      Spaces.add_space('Cosy Mansion', 'Extremely mansion cottage in the woods', '150')
 
-      persisted_data = persisted_data(space.space_id)
+    it 'returns an array of Spaces objects' do
+
+      User.add_user(username: 'test', email: 'test@makers.co.uk', fullname: 'test user', pw: 'abc123')
+      Spaces.add_space('Cosy Cottage', 'Extremely cosy cottage in the woods', '70', 1)
+      space = Spaces.add_space('Cosy Villa', 'Extremely villa cottage in the woods', '50', 1)
+      Spaces.add_space('Cosy Mansion', 'Extremely mansion cottage in the woods', '150', 1)
+
+      persisted_data = persisted_data_spaces(space)
 
       expect(Spaces.all.count).to eq 3
       expect(Spaces.all[0]).to be_an_instance_of Spaces
@@ -27,8 +31,54 @@ describe Spaces do
       expect(Spaces.all[2].space_name).to eq 'Cosy Mansion'
       expect(Spaces.all[0].space_description).to eq 'Extremely cosy cottage in the woods'
       expect(Spaces.all[1].price_per_night).to eq '$50.00'
+
     end
+
   end
+
+  describe '#edit_space' do
+
+    it 'edits a space\'s details' do
+      User.add_user(username: 'test', email: 'test@makers.co.uk', fullname: 'test user', pw: 'abc123')
+      Spaces.add_space('Cosy Cottage', 'Extremely cosy cottage in the woods', '70', 1)
+      Spaces.edit_space(1, 'Hole in the Wall', 'Cold & Dirty', 2)
+      expect(Spaces.all.count).to eq 1
+      expect(Spaces.all[0].space_id).to eq '1'
+      expect(Spaces.all[0].space_name).to eq 'Hole in the Wall'
+      expect(Spaces.all[0].space_description).to eq 'Cold & Dirty'
+      expect(Spaces.all[0].price_per_night).to eq '$2.00'
+    end
+
+  end
+
+  describe '#add_availability #availability' do
+
+    it 'adds and returns a space\'s availabile dates respectively' do
+      User.add_user(username: 'test', email: 'test@makers.co.uk', fullname: 'test user', pw: 'abc123')
+      Spaces.add_space('Cosy Cottage', 'Extremely cosy cottage in the woods', '70', 1)
+      Spaces.add_availability(1, '2022-01-01', '2022-01-03')
+      availability = Spaces.availability(1)
+      expect(availability[0]['dates']).to eq '2022-01-01'
+      expect(availability[1]['dates']).to eq '2022-01-02'
+      expect(availability[2]['dates']).to eq '2022-01-03'
+    end
+
+  end
+
+  describe '#delete' do
+
+    it 'deletes a space' do
+      User.add_user(username: 'test', email: 'test@makers.co.uk', fullname: 'test user', pw: 'abc123')
+      Spaces.add_space('Cosy Cottage', 'Extremely cosy cottage in the woods', '70', 1)
+      expect(Spaces.all.count).to eq 1
+      expect(Spaces.all[0].space_name).to eq 'Cosy Cottage'
+      Spaces.delete(1)
+      expect(Spaces.all.count).to eq 0
+      expect(Spaces.all[0]).to eq nil
+    end
+
+  end
+
 
 end
 

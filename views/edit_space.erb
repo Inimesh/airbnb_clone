@@ -1,19 +1,46 @@
- <form action="/edit_space/:space_id/edit" method="post">
-    <input type="text" name="space_name" placeholder="Your Space Name">
-    <input type="textarea" name="space_description" placeholder="Space Description">
-    <input type="text" name="price_per_night" placeholder="Price/night">
-    
+<div id="edit-space-block-<%=@current_space.space_id%>">
 
-    <label for="start">Start date:</label>
-    <input type="date" id="start" name="stay_start"
-    value="<%=Date.today.strftime%>"
-    min="<%=Date.today.strftime%>" max="<%=(Date.today + 364).strftime%>">
+    <h1><%=@current_space.space_name%></h1>
 
-    <label for="end">End Date:</label>
-    <input type="date" id="end" name="stay_finish"
-    value="<%=(Date.today + 14).strftime%>" 
-    min="<%=(Date.today + 1).strftime%>" max="<%=(Date.today + 365).strftime%>">
-    
-    <input type="submit" value="Edit">
-    <%# extra = can we make sure end date is not before start date? %>
-</form>
+    <div class="edit-space-">
+        <form action="/edit_space/<%=@current_space.space_id%>/edit" method="post">
+            <h3>Update <%=@current_space.space_name%> Details</h1>
+            <input type="text" name="space_name" value="<%=@current_space.space_name%>">
+            <textarea rows="5" cols="30" name="space_description">
+            <%=@current_space.space_description%>
+            </textarea>
+            <input type="text" name="price_per_night" value="<%=@current_space.price_per_night%>">
+            <input type="submit" value="Update">
+
+            <h3>Add <%=@current_space.space_name%> Availability</h1>
+            <label for="start">Start date:</label>
+            <input type="date" id="start" name="stay_start"
+            value="<%=Date.today.strftime%>"
+            min="<%=Date.today.strftime%>" max="<%=(Date.today + 364).strftime%>">
+
+            <label for="end">End Date:</label>
+            <input type="date" id="end" name="stay_finish"
+            value="<%=(Date.today + 14).strftime%>" 
+            min="<%=(Date.today + 1).strftime%>" max="<%=(Date.today + 365).strftime%>">
+            
+            <input type="submit" value="Add">
+        </form>
+    </div>
+
+    <div class="current-availability">
+        <h3><%=@current_space.space_name%> Current Availability</h3>
+        <%@availability.each do |date|%>
+            <div class="<%=date['dates']%> space-availability">
+                <p><%=date['dates']%><p>
+            </div>
+            <div id="delete-availability-<%=date['dates']%>" class="delete-availability-button">
+                <form action="/delete_availability/<%=date['availability_id']%>/delete" method='post'>
+                    <button type='submit' value='Delete'>
+                        <i class='fas fa-trash-alt'></i>
+                    </button>
+                </form>
+            </div>
+        <%end%>
+    </div>
+
+</div>

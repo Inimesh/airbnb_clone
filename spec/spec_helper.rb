@@ -3,6 +3,7 @@ ENV['ENVIRONMENT'] = 'test'
 # require_relative './construct_test_database'
 # require_relative './deconstruct_test_database'
 require_relative './setup_testing_database'
+require_relative File.join(File.dirname(__FILE__), 'web_helper.rb')
 
 # Configure Rspec
 RSpec.configure do |config|
