@@ -9,7 +9,7 @@ feature 'login' do
     click_button('login')
     fill_in 'username', with: test_user.username
     fill_in 'password', with: pw
-    click_button('confirm_login')
+    click_button('login')
 
     expect(current_path).to eq '/main_view'
   end
@@ -22,7 +22,7 @@ feature 'login' do
     click_button('login')
     fill_in 'username', with: 'test_username2'
     fill_in 'password', with: pw
-    click_button('confirm_login')
+    click_button('login')
 
     expect(current_path).to eq '/login'
     expect(page).to have_content 'Username does not exist'
@@ -36,7 +36,7 @@ feature 'login' do
     click_button('login')
     fill_in 'username', with: test_user.username
     fill_in 'password', with: 'secret2'
-    click_button('confirm_login')
+    click_button('login')
 
     expect(current_path).to eq '/login'
     expect(page).to have_content 'Password does not match'

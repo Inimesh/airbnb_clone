@@ -35,8 +35,7 @@ class MakersBnb < Sinatra::Base
 
   post '/add_space' do
     @user_id = session[:user_id]
-    @space_id = Spaces.add_space(params[:space_name], params[:space_description], 
-params[:price_per_night], @user_id)
+    @space_id = Spaces.add_space(params[:space_name], params[:space_description], params[:price_per_night], @user_id)
     Spaces.add_availability(@space_id, params[:stay_start], params[:stay_finish])
     redirect '/main_view'
   end

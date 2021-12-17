@@ -1,16 +1,16 @@
-<div id="edit-space-block-<%=@current_space.space_id%>">
+<div class="edit-spaces" id="edit-space-block-<%=@current_space.space_id%>">
 
     <h1><%=@current_space.space_name%></h1>
 
     <div class="edit-space-">
         <form action="/edit_space/<%=@current_space.space_id%>/edit" method="post">
             <h3>Update <%=@current_space.space_name%> Details</h1>
-            <input type="text" name="space_name" value="<%=@current_space.space_name%>">
+            <input type="text" name="space_name" value="<%=@current_space.space_name%>"><br>
             <textarea rows="5" cols="30" name="space_description">
             <%=@current_space.space_description%>
-            </textarea>
-            <input type="text" name="price_per_night" value="<%=@current_space.price_per_night%>">
-            <input type="submit" value="Update">
+            </textarea><br>
+            <input type="text" name="price_per_night" value="<%=@current_space.price_per_night%>"><br>
+            <input type="submit" value="Update"><br><br>
 
             <h3>Add <%=@current_space.space_name%> Availability</h1>
             <label for="start">Start date:</label>
@@ -24,7 +24,7 @@
             min="<%=(Date.today + 1).strftime%>" max="<%=(Date.today + 365).strftime%>">
             
             <input type="submit" value="Add">
-        </form>
+        </form><br>
     </div>
 
     <div class="current-availability">
