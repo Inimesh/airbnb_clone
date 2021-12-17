@@ -15,7 +15,6 @@
       <a class="navbar-brand" href="/main_view">
         <img src="/images/MAKERSBNB.png" alt="makers bnb logo" width="435" height="100">
       </a>
-    </div>
       <% if @current_user == nil %>
         <div id="sign-up">
           <form action="/sign-up" method="get">
@@ -34,6 +33,7 @@
           </form>
         </div> 
       <% end %>
+    </div>
   </nav>
   <% flash.keys.each do |type| %>
     <div data-alert class="flash <%= type %> alert-box radius">
