@@ -57,6 +57,13 @@ class MakersBnb < Sinatra::Base
     Spaces.delete(params[:space_id])
     redirect '/main_view'
   end
+
+
+  get '/review-request/:host_id' do
+    space_id_array = Spaces.find_hosts_spaces(params[:host_id])
+    erb :host_review_requests
+  end
+
   get '/booking/:space_id/book' do
     @space_id = params[:space_id]
     @current_space = Spaces.find(params[:space_id])

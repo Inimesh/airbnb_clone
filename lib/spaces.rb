@@ -73,8 +73,10 @@ class Spaces
     DatabaseConnection.query("DELETE FROM availability WHERE availability_id = ($1)", [availability_id])
   end
 
-  
-  
+  def self.find_hosts_spaces(user_id)
+    ids = DatabaseConnection.query("SELECT space_id FROM spaces WHERE user_id = $1;", [user_id])
+    ids.map { |id| id['space_id'] }
+  end
 end
 
 # def self.find(space_id)
