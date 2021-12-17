@@ -6,3 +6,9 @@ def persisted_data(id)
   result = connection.query("SELECT * FROM users WHERE user_id = #{id};")
   result.first
 end
+
+def persisted_data_spaces(id)
+  connection = DatabaseConnection.setup('makersbnb_test')
+  result = connection.query("SELECT * FROM spaces WHERE space_id = #{id};")
+  result.first
+end

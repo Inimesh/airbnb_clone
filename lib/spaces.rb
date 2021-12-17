@@ -40,6 +40,7 @@ class Spaces
   def self.add_availability(space_id, stay_start, stay_finish)
     dates = (Date.parse(stay_start).strftime..Date.parse(stay_finish).strftime).to_a
     
+    #extra - raise an error if dates already exist in db
     dates.each do |date| 
       DatabaseConnection.query(
         "INSERT INTO availability (space_id, dates) VALUES ($1, $2)", [
@@ -48,23 +49,45 @@ class Spaces
     
   end
 
+  def self.edit_space(space_id, new_space_name, new_space_description, new_price_per_night)
+    DatabaseConnection.query("UPDATE spaces SET space_name = ($1), space_description = ($2), price_per_night = ($3) WHERE space_id = ($4)", [new_space_name, new_space_description, new_price_per_night, space_id])
+  end
+
   def self.availability(space_id)
     # Check for dates that are booked and make sure that they are not displayed to the user as availabilities
     # We need to make a query to the 'request' table and find out which ones have booked = TRUE
     # We want to NOT include these booked ones in our availabilities
-    availabilities = DatabaseConnection.query("SELECT availability_id, dates FROM availability WHERE space_id = ($1);", [space_id])
+
+    # availabilities = DatabaseConnection.query("SELECT availability_id, dates FROM availability WHERE space_id = ($1);", [space_id])
+
+    DatabaseConnection.query("SELECT availability.availability_id, dates
+    FROM availability
+    WHERE availability.space_id = ($1)
+    EXCEPT
+    SELECT availability.availability_id, dates
+    FROM availability
+    JOIN request ON request.availability_id = availability.availability_id
+    AND request.booked != FALSE
+    ORDER BY availability_id ASC;", [space_id])
   end
 
-  # def self.find(space_id)
-  #   rs = DatabaseConnection.query('SELECT * FROM spaces WHERE space_id = $1;', [space_id])
-  #   Spaces.new(rs[0]['space_id'], rs[0]['space_name'], rs[0]['space_description'], rs[0]['price_per_night'], rs[0]['user_id'])
-  # end
+  def self.delete(space_id)
+    DatabaseConnection.query("DELETE FROM spaces WHERE space_id = ($1)", [space_id])
+  end
 
+  def self.delete_availability(availability_id)
+    DatabaseConnection.query("DELETE FROM availability WHERE availability_id = ($1)", [availability_id])
+  end
+
+  
+  
 end
 
-  # def self.delete(id)
-  #   DatabaseConnection.query("DELETE FROM spaces WHERE id = ($1)", [id])
-  # end
+# def self.find(space_id)
+#   rs = DatabaseConnection.query('SELECT * FROM spaces WHERE space_id = $1;', [space_id])
+#   Spaces.new(rs[0]['space_id'], rs[0]['space_name'], rs[0]['space_description'], rs[0]['price_per_night'], rs[0]['user_id'])
+# end
+ 
 
 #   def self.edit(id, new_url, new_title)
 #     DatabaseConnection.query("UPDATE bookmarks SET url = ($1), title = ($2) WHERE id = ($3)", [new_url, new_title, id])
