@@ -12,6 +12,18 @@ class User
     @pw = pw
   end
 
+  def self.all
+    table = DatabaseConnection.query('SELECT * FROM users ORDER BY user_id ASC') 
+    table.map do |user|
+      User.new(user_id: user['user_id'], username: user['username'], email: user['email'], 
+     fullname: user['fullname'], pw: user['pw'])
+    end  
+  end
+
+  def self.find(user_id)
+    all.select { |user| user.user_id == user_id }.first
+  end
+
   def self.add_user(username:, email:, fullname:, pw:)
     encrypted_password = BCrypt::Password.create(pw)
     

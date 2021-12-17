@@ -16,7 +16,7 @@
       </div>
 
       <div class="space-host-review" id="<%=space.space_id%> space-host-review">
-        <form action='/' method='get'>
+        <form action='/review-request/<%= @current_user %>' method='get'>
           <input type="hidden" value="<%=space.space_id%>">
           <input type="submit" class="btn btn-secondary" value="Review Booking Requests">
         </form>
