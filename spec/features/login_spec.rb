@@ -24,7 +24,7 @@ feature 'login' do
     fill_in 'password', with: pw
     click_button('confirm_login')
 
-    expect(current_path).to eq '/'
+    expect(current_path).to eq '/login'
     expect(page).to have_content 'Username does not exist'
   end
 
@@ -38,7 +38,7 @@ feature 'login' do
     fill_in 'password', with: 'secret2'
     click_button('confirm_login')
 
-    expect(current_path).to eq '/'
+    expect(current_path).to eq '/login'
     expect(page).to have_content 'Password does not match'
   end
 end
